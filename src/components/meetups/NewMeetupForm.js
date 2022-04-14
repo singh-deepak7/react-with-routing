@@ -1,9 +1,11 @@
-import { useRef } from 'react';
+import { useRef } from "react";
 
 import Card from "../ui/Card";
 import classes from "./NewMeetupForm.module.css";
+import { useNavigate } from "react-router-dom";
 
 function NewMeetupForm() {
+  const navigate = useNavigate();
   const titleInputRef = useRef();
   const imageInputRef = useRef();
   const addressInputRef = useRef();
@@ -25,6 +27,15 @@ function NewMeetupForm() {
     };
 
     console.log(meetupData);
+    fetch("http://localhost:8080/api/v1/meetup", {
+      method: "POST",
+      body: JSON.stringify(meetupData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then(() => {
+      navigate("/");
+    });
   }
 
   return (
